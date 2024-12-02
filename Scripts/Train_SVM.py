@@ -1,5 +1,5 @@
 import pandas as pd
-from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score, classification_report
 from sklearn.preprocessing import StandardScaler
@@ -50,7 +50,13 @@ best_params = grid_search.best_params_
 print(f"Best parameters: {best_params}")
 svm_model = grid_search.best_estimator_
 
-# Step 3: Train the SVM model on the main dataset using the best parameters
+# Step 3: Cross-validation on the training dataset
+print("\nPerforming cross-validation...")
+cross_val_scores = cross_val_score(svm_model, X_train, y_train, cv=5, scoring='accuracy')
+print(f"Cross-validation accuracy scores: {cross_val_scores}")
+print(f"Mean cross-validation accuracy: {cross_val_scores.mean():.4f}")
+
+# Step 4: Train the SVM model on the main dataset using the best parameters
 print("\nTraining on main dataset with best parameters...")
 svm_model.fit(X_train, y_train)
 
@@ -61,10 +67,10 @@ print(f"Accuracy on main test data: {accuracy:.4f}")
 print("Classification Report:")
 print(classification_report(y_test, y_pred))
 
-# # Step 4: Save the trained model
-# models_dir = "models"
-# os.makedirs(models_dir, exist_ok=True)
-# model_file_path = os.path.join(models_dir, "svm_model.joblib")
-# joblib.dump(svm_model, model_file_path)
+# Step 5: Save the trained model
+models_dir = "Models"
+os.makedirs(models_dir, exist_ok=True)
+model_file_path = os.path.join(models_dir, "svm_model.joblib")
+joblib.dump(svm_model, model_file_path)
 
-# print(f"Model has been saved to {model_file_path}")
+print(f"Model has been saved to {model_file_path}")
