@@ -32,13 +32,31 @@ X_scaled = scaler.fit_transform(X)
 # Split the data into training (80%) and testing (20%) sets
 X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
 
+# Define the MLP model with initial hyperparameters for testing
+model = MLPClassifier(
+    hidden_layer_sizes=(100,),  # Single hidden layer with 100 neurons
+    activation='relu',          # Activation function
+    solver='adam',              # Solver for weight optimization
+    learning_rate_init=0.001,   # Initial learning rate
+    alpha=0.0001,               # L2 regularization term
+    max_iter=10000,             # Maximum number of iterations
+    random_state=42             # Random state for reproducibility
+)
+
+# Fit the initial model
+model.fit(X_train, y_train)
+
+# Evaluate the initial model
+y_pred = model.predict(X_test)
+print("Initial Accuracy:", accuracy_score(y_test, y_pred))
+
 # Define the parameter grid for GridSearchCV
 param_grid = {
-    'hidden_layer_sizes': [(50,), (100,), (50, 50), (100, 50)],
-    'activation': ['relu', 'tanh'],
-    'solver': ['adam', 'sgd'],
-    'learning_rate_init': [0.001, 0.01, 0.1],
-    'alpha': [0.0001, 0.001]
+    'hidden_layer_sizes': [ (50, ), (100, ) ,(200,)],
+    'activation': ['relu'],
+    'solver': ['adam'],
+    'learning_rate_init': [0.001, 0.01],
+    'alpha': [0.0001]
 }
 
 # Apply GridSearchCV for hyperparameter tuning
