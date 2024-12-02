@@ -51,4 +51,12 @@ y_pred = best_rf_model.predict(X_test)
 print("Classification Report:\n", classification_report(y_test, y_pred))
 print("Confusion Matrix:\n", confusion_matrix(y_test, y_pred))
 
+# Ensure the 'Models' directory exists
+model_dir = 'Models'
+os.makedirs(model_dir, exist_ok=True)
 
+# Save the optimized model
+model_path = os.path.join(model_dir, 'optimized_random_forest.pkl')
+joblib.dump(best_rf_model, model_path)
+
+print(f"Optimized model saved to {model_path}")
