@@ -9,6 +9,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
 
+
 file_path = 'Data/train_test_dataset.csv'  
 df = pd.read_csv(file_path)
 
@@ -55,7 +56,7 @@ def generate_results(model_path, X_test, y_test):
     plt.imshow(conf_matrix, cmap='Blues', interpolation='nearest')
     plt.title(f"Confusion Matrix: {model_path}")
     plt.colorbar()
-    plt.xlabel("Predicted")
+    plt.xlabel("Predicted Values")
     plt.ylabel("Actual")
     plt.xticks(np.arange(len(np.unique(y_test))), np.unique(y_test))
     plt.yticks(np.arange(len(np.unique(y_test))), np.unique(y_test))
