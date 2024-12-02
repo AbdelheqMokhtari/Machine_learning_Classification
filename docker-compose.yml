@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: .
+    container_name: datatest_container
+    volumes:
+      - ./Models:/app/Models  # Mount the Models directory
+    ports:
+      - "5000:5000"  # Map port 5000 (if needed)
+    command: ["bash", "./run_scripts.sh"]  
