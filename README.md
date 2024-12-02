@@ -146,3 +146,15 @@ Install the required libraries using:
 
 ```bash
 pip install -r requirements.txt
+```
+
+## Contributors
+
+This project was developed by the following contributors:
+
+- **Mokhtari Abdelheq**
+- **Meghatria M'hamed Rayane**
+- **Razi Mohamed Raouf**
+
+Thank you to everyone who contributed to this project!
+
