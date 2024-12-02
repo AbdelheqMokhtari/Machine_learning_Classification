@@ -6,7 +6,7 @@ from sklearn.preprocessing import StandardScaler
 import pandas as pd
 
 # Load the dataset from the CSV file
-file_path = "Data/Train_test_dataset.csv"
+file_path = "Data/train_test_dataset.csv"
 df = pd.read_csv(file_path)
 
 # Separate features (X) and target (y)
@@ -37,12 +37,23 @@ grid_search = GridSearchCV(
     n_jobs=-1
 )
 
+# Define the MLP model with chosen hyperparameters
+model = MLPClassifier(
+    hidden_layer_sizes=(100,),  # Single hidden layer with 100 neurons
+    activation='relu',          # Activation function
+    solver='adam',              # Solver for weight optimization
+    learning_rate_init=0.001,   # Initial learning rate
+    alpha=0.0001,               # L2 regularization term
+    max_iter=1000,              # Maximum number of iterations
+    random_state=42             # Random state for reproducibility
+)
+
+
 # Fit the model
-grid_search.fit(X_train, y_train)
-best_model = grid_search.best_estimator_
+model.fit(X_train, y_train)
 
 # Evaluate the model
-y_pred = best_model.predict(X_test)
-print("Best Parameters:", grid_search.best_params_)
+y_pred = model.predict(X_test)
+# print("Best Parameters:", grid_search.best_params_)
 print("Accuracy:", accuracy_score(y_test, y_pred))
 
