@@ -1,2 +1,4 @@
 venv/
-Models/*
+Models/*.joblib
+Models/*.pkl
+
