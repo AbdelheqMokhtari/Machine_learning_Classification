@@ -59,13 +59,40 @@ The project is organized as follows:
    Use the following scripts to train and save models:  
    - `Train_SVM.py`: Train the SVM model.  
    - `Train_Neural_Network.py`: Train the Neural Network model.  
-   - `RandomForest.py`: Train the Random Forest model.
+   - `RandomForest.py`: Train the Random Forest model.  
+
+   The trained models will be saved in the `Models/` directory.
 
 3. **Visualize Data and Results**  
-   Open and run the notebooks in the `Notebooks/` directory to explore the dataset and compare model results.
+   - Use `data_visualization.ipynb` to generate and explore different datasets with various parameters.  
+   - Use `Result_Visualisation.ipynb` to load and compare the performance of the trained models on the validation dataset.
 
 4. **Make Predictions**  
-   Use `predict_classification.py` to make predictions with the trained models.
+   Use `predict_classification.py` to make predictions with the trained models. The script can accept arguments to display results for a specific model. For example:  
+   ```bash
+   python predict_classification.py --model "Neural Network"
+
+   python predict_classification.py --model "SVM"
+
+   python predict_classification.py --model "Random Forest"
+    ```
+
+
+   If no arguments are provided, the script will display results for all three models by default.
+
+5. **Generate Reports**
+Run `report_generation.py` to produce performance reports and visualizations for each model. These will be saved in the `Results/` directory.
+
+## Model Evaluation and Hyperparameter Tuning
+
+To ensure the best performance, we implemented **5-fold cross-validation** in the three scripts `predict_classification.py`, `RandomForest.py` and `Train_Neural_Network.py` to evaluate the models. During this process, we tested different hyperparameters using **GridSearchCV** to select the best model.
+
+- **5-Fold Cross-Validation**: The dataset is split into five folds, and the model is trained and evaluated five times, each time using a different fold as the validation set and the remaining folds as the training set. This helps to assess the model’s performance more robustly.
+
+- **GridSearchCV**: This technique is used to search through a specified hyperparameter grid to find the optimal parameters for each model. It performs an exhaustive search over all possible combinations of hyperparameters, ensuring the selection of the best-performing model based on cross-validation results.
+
+By using 5-fold cross-validation with GridSearch, we ensure that the model selected is the most reliable and robust with respect to the dataset.
+
 
 ## Results
 
@@ -74,6 +101,33 @@ Each model's performance is stored as:
 - `.json` files for numerical metrics  
 
 These results are generated using the `report_generation.py` script and can be compared in detail using the `Result_Visualisation.ipynb` notebook.
+
+## Docker
+
+This project uses Docker to containerize the application and ensure a consistent environment for running the machine learning model training and evaluation tasks.
+
+### Setup and Run with Docker
+
+1. **Build the Docker Image**  
+   To build the Docker image for this project, use the following command:
+
+   ```bash
+   docker build -t ml-models .
+
+2. **Run the Docker Container**
+    After building the image, you can run the container using:
+
+    ```bash
+    docker run -it --rm ml-models
+
+3. **Use Docker Compose**
+    For easier management, the project also includes a docker-compose.yml file. You can start the container with:
+
+    ```bash
+    docker-compose up --build
+
+4. **Docker Volumes**
+    The project uses Docker volumes to link the Models directory on your local machine with the Models directory inside the container. This ensures that any models trained or updated inside the container are reflected on your local machine.
 
 ## Requirements
 
