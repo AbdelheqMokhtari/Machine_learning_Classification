@@ -56,7 +56,7 @@ model_dir = 'Models'
 os.makedirs(model_dir, exist_ok=True)
 
 # Save the optimized model
-model_path = os.path.join(model_dir, 'optimized_random_forest.pkl')
+model_path = os.path.join(model_dir, 'random_forest.pkl')
 joblib.dump(best_rf_model, model_path)
 
-print(f"Optimized model saved to {model_path}")
+print(f" model saved to {model_path}")
