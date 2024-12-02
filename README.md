@@ -118,7 +118,7 @@ This project uses Docker to containerize the application and ensure a consistent
     After building the image, you can run the container using:
 
     ```bash
-    docker run -it --rm ml-models
+    docker run  --name ml-container ml-models
 
 3. **Use Docker Compose**
     For easier management, the project also includes a docker-compose.yml file. You can start the container with:
@@ -139,6 +139,8 @@ This project uses Docker to containerize the application and ensure a consistent
   - `scikit-learn`
   - `pickle`
   - `seaborn`
+  - `matplotlib`
+  - `joblib`
 
 Install the required libraries using:
 
