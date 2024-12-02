@@ -1,7 +1,17 @@
-import pandas as pd 
+import argparse
+import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from joblib import load
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+
+# Function to parse command-line arguments
+def parse_args():
+    parser = argparse.ArgumentParser(description="Choose an algorithm to evaluate.")
+    parser.add_argument(
+        '--model', choices=['neural_network', 'random_forest', 'svm'],
+        help="Specify the model to evaluate. Options are 'neural_network', 'random_forest', or 'svm'."
+    )
+    return parser.parse_args()
 
 # Load the dataset from the CSV file
 file_path = "Data/validation_dataset.csv"
@@ -20,15 +30,6 @@ neural_network_model = load("Models/Neural_Network.pkl")
 random_forest_model = load("Models/random_forest.pkl")
 svm_model = load("Models/svm_model.joblib")
 
-# Predict with Neural Network model
-nn_predictions = neural_network_model.predict(X_scaled)
-
-# Predict with Random Forest model
-rf_predictions = random_forest_model.predict(X_scaled)
-
-# Predict with SVM model
-svm_predictions = svm_model.predict(X_scaled)
-
 # Function to print accuracy, classification report and confusion matrix
 def evaluate_model(predictions, model_name):
     print(f"\nEvaluation for {model_name}:")
@@ -46,11 +47,22 @@ def evaluate_model(predictions, model_name):
     print("Confusion Matrix:")
     print(cm)
 
+# Parse command-line arguments
+args = parse_args()
 
-# Evaluate each model
-evaluate_model(nn_predictions, "Neural Network")
-evaluate_model(rf_predictions, "Random Forest")
-evaluate_model(svm_predictions, "SVM")
+# Evaluate the selected model or all models if no argument is provided
+if args.model == 'neural_network' or args.model is None:
+    nn_predictions = neural_network_model.predict(X_scaled)
+    evaluate_model(nn_predictions, "Neural Network")
+
+if args.model == 'random_forest' or args.model is None:
+    rf_predictions = random_forest_model.predict(X_scaled)
+    evaluate_model(rf_predictions, "Random Forest")
+
+if args.model == 'svm' or args.model is None:
+    svm_predictions = svm_model.predict(X_scaled)
+    evaluate_model(svm_predictions, "SVM")
+
 
 
 
