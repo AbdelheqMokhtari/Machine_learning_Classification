@@ -6,11 +6,11 @@ X, y = make_classification(
     n_samples=10000,          
     n_features=20,           
     n_informative=5,                               
-    n_classes=3,             
+    n_classes=4,             
     n_clusters_per_class=2,  
     weights=[0.5, 0.3, 0.2], 
     flip_y=0.1,              
-    class_sep=0.65,           
+    class_sep=1.0,           
     random_state=42         
 )
 
